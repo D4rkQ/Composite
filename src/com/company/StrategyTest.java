@@ -13,8 +13,8 @@ public class StrategyTest {
 
         InvoiceBuilder ib = new InvoiceBuilder();
         //Papier2 und Schere2 enthalten in Ihrer "description" den String "seven" also werden Sie mit 7% Mehrwertsteuer berechnet.
-        ib.addLineItem(new LineItem("Papier2seven",new Money(1210),13));
-        ib.addLineItem(new LineItem("Schere2seven",new Money(588),3));
+        ib.addLineItem(new LineItem(13, new Article("Papier2seven",new Money(1210))));
+        ib.addLineItem(new LineItem(3, new Article("Schere2seven",new Money(588))));
         //Da in der "address" der Invoice der String "complex" vorkommt wird die RechenStrategý aus ComplexTaxStrategy.java verwendet
         Invoice invoice1 = ib.createDefault(new Receiver("Hans", "Reutlingencomplex"));
 
@@ -27,8 +27,8 @@ public class StrategyTest {
 
         InvoiceBuilder ib = new InvoiceBuilder();
         //Papier2 und Schere2 enthalten in Ihrer "description" NICHT den String "seven" also werden Sie mit 19% Mehrwertsteuer berechnet.
-        ib.addLineItem(new LineItem("Papier2",new Money(1210),13));
-        ib.addLineItem(new LineItem("Schere2",new Money(588),3));
+        ib.addLineItem(new LineItem(13, new Article("Papier2",new Money(1210))));
+        ib.addLineItem(new LineItem(3, new Article("Schere2",new Money(588))));
         //Da in der "address" der Invoice der String "complex" vorkommt wird die RechenStrategý aus ComplexTaxStrategy.java verwendet
         Invoice invoice1 = ib.createDefault(new Receiver("Hans", "Reutlingencomplex"));
 
@@ -41,8 +41,8 @@ public class StrategyTest {
 
         InvoiceBuilder ib = new InvoiceBuilder();
         //Papier2 enthält in Ihrer "description" den String "seven" also wird NUR Sie mit 7% Mehrwertsteuer berechnet der Rest mit 19%.
-        ib.addLineItem(new LineItem("Papier2seven",new Money(1210),13));
-        ib.addLineItem(new LineItem("Schere2",new Money(588),3));
+        ib.addLineItem(new LineItem(13, new Article("Papier2seven",new Money(1210))));
+        ib.addLineItem(new LineItem(3, new Article("Schere2",new Money(588))));
         //Da in der "address" der Invoice der String "complex" vorkommt wird die RechenStrategý aus ComplexTaxStrategy.java verwendet
         Invoice invoice1 = ib.createDefault(new Receiver("Hans", "Reutlingencomplex"));
 
@@ -55,8 +55,8 @@ public class StrategyTest {
 
         InvoiceBuilder ib = new InvoiceBuilder();
         //Bei der Simple Strategy hat die "description" keinen Einfluss auf die Mehrwertsteuer
-        ib.addLineItem(new LineItem("Papier2",new Money(1210),13));
-        ib.addLineItem(new LineItem("Schere2",new Money(588),3));
+        ib.addLineItem(new LineItem(13, new Article("Papier2",new Money(1210))));
+        ib.addLineItem(new LineItem(3, new Article("Schere2",new Money(588))));
         //Da in der "address" der Invoice der String "simple" vorkommt wird die RechenStrategy aus SimpleTaxStrategy.java verwendet
         Invoice invoice1 = ib.createDefault(new Receiver("Hans", "Reutlingensimple"));
 

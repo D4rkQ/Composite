@@ -31,14 +31,14 @@ public class BuilderTest {
     public void testBuilder() throws Exception {
         InvoiceBuilder ib = new InvoiceBuilder();
 
-        ib.addLineItem(new LineItem("Papier",new Money(1210),13));
-        ib.addLineItem(new LineItem("Schere",new Money(588),3));
+        ib.addLineItem(new LineItem(13, new Article("Papier",new Money(1210))));
+        ib.addLineItem(new LineItem(3, new Article("Schere",new Money(588))));
         ib.clearLineItems();
-        ib.addLineItem(new LineItem("Papier2",new Money(1210),13));
-        ib.addLineItem(new LineItem("Schere2",new Money(588),3));
+        ib.addLineItem(new LineItem(13, new Article("Papier2",new Money(1210))));
+        ib.addLineItem(new LineItem(3, new Article("Schere2",new Money(588))));
         Invoice invoice1 = ib.createDefault(new Receiver("Hans", "Reutlingen"));
 
-        System.out.println("Rechnugsbetrag = " + invoice1.netValue());
+        System.out.println("Rechnugsbetrag = " + invoice1.evaluate());
 
         for (LineItem x: invoice1.getLineItems()) {
             System.out.println(x);

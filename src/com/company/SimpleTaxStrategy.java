@@ -9,6 +9,6 @@ public class SimpleTaxStrategy implements TaxStrategy {
 
     @Override
     public Money calcTax(Invoice invoice) {
-        return invoice.netValue().mult(1.19);
+        return invoice.evaluate().mult(1.19);
     }
 }

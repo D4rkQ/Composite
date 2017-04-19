@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,23 +9,15 @@ import java.util.List;
  * Project: Strategy
  * Created by sailerm on 31.03.2017.
  */
-public class Invoice {
+public class Invoice extends ContainsComponentList implements Component {
 
-    private final List<LineItem> listOfLineItems = new ArrayList<>();
+    //private final List<LineItem> listOfLineItems = new ArrayList<>();
     private final InvoiceHeader invoiceHeader;
-
-    public TaxStrategy getCurrentStrategy() {
-        return currentStrategy;
-    }
-
-    public void setCurrentStrategy(TaxStrategy currentStrategy) {
-        this.currentStrategy = currentStrategy;
-    }
-
     private volatile TaxStrategy currentStrategy;
 
     Invoice(List<? extends LineItem> listOfLineItems, InvoiceHeader invoiceHeader) {
-        this.listOfLineItems.addAll(listOfLineItems);
+        super.listOfComponents.addAll(listOfLineItems);
+        //this.listOfLineItems.addAll(listOfLineItems);
         this.invoiceHeader = invoiceHeader;
 
         if (invoiceHeader.getBillRec().getAddress().contains("simple")) {
@@ -37,20 +30,21 @@ public class Invoice {
         }
     }
 
-    Money netValue() {
-        Money tmp = new Money(0);
-        for (LineItem x: listOfLineItems) {
-            tmp = tmp.add(x.sum());
-        }
-        return tmp;
+    public TaxStrategy getCurrentStrategy() {
+        return currentStrategy;
     }
+
+    public void setCurrentStrategy(TaxStrategy currentStrategy) {
+        this.currentStrategy = currentStrategy;
+    }
+
 
     Money grossValue(){
         return currentStrategy.calcTax(this);
     }
 
     List<LineItem> getLineItems() {
-        return Collections.unmodifiableList(listOfLineItems);
+        return Collections.unmodifiableList(listOfComponents);
     }
 
     public InvoiceHeader getInvoiceHeader() {
@@ -58,9 +52,18 @@ public class Invoice {
     }
 
     @Override
+    public Money evaluate() {
+        Money tmp = new Money(0);
+        for (Component x: listOfComponents) {
+            tmp = tmp.add(x.evaluate());
+        }
+        return tmp;
+    }
+
+    @Override
     public String toString() {
         return "Invoice{" +
-                "listOfLineItems=" + listOfLineItems +
+                "listOfLineItems=" + listOfComponents +
                 ", invoiceHeader=" + invoiceHeader +
                 '}';
     }
