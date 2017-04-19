@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AbstractFactoryTest {
 
+
     @Test
     public void testFactory() throws Exception {
         String name = "Hans";
