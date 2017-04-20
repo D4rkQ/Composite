@@ -6,11 +6,14 @@ import java.util.List;
 /**
  * Created by SAILMA on 19.04.2017. d
  */
-public abstract class ContainsComponentList implements Component {
+public abstract class ContainsComponentList<T extends Component> {
 
-    List<Component> listOfComponents = new ArrayList<>();
+    List<? extends Component> listOfComponents = new ArrayList<>();
 
-    @Override
+    public ContainsComponentList(List<? extends Component> listOfComponents) {
+        this.listOfComponents = listOfComponents;
+    }
+
     public Money evaluate() {
         Money tmp = new Money(0);
         for (Component x : listOfComponents) {
@@ -18,4 +21,8 @@ public abstract class ContainsComponentList implements Component {
         }
         return tmp;
     }
+
+
+
+
 }
